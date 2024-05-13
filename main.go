@@ -8,9 +8,12 @@ import (
 type Colour string
 
 const (
-	colourRed   Colour = "\u001b[31m"
-	colourBlue  Colour = "\u001b[34m"
-	colourReset Colour = "\u001b[0m"
+	colourBlack  Colour = "\u001b[30m"
+	colourRed          = "\u001b[31m"
+	colourGreen        = "\u001b[32m"
+	colourYellow       = "\u001b[33m"
+	colourBlue         = "\u001b[34m"
+	colourReset        = "\u001b[0m"
 )
 
 func colorize(colour Colour, message string) {
