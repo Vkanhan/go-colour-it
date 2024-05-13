@@ -23,11 +23,12 @@ func main() {
 	blood := flag.Bool("blood", false, "display the message")
 	flag.Parse()
 
-	if *sky {
+	switch {
+	case *sky:
 		colorize(colourBlue, "sky is blue")
-	}
-
-	if *blood {
+	case *blood:
 		colorize(colourRed, "blood is red")
+	default:
+		fmt.Println("invalid command!")
 	}
 }
