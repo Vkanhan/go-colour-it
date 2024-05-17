@@ -25,25 +25,24 @@ type FlagInfo struct {
 	colour  Colour
 }
 
-// Implement flags as map and include the details
-var flags = map[string]FlagInfo{
-	"sky":    {nil, "sky is blue", colourBlue},
-	"blood":  {nil, "blood is red", colourRed},
-	"grass":  {nil, "grass is green", colourGreen},
-	"carrot": {nil, "carrot is orange", colourOrange},
-	"crow":   {nil, "crow is black", colourBlack},
+// Implement flags as map and include the details and use FlagInfo as pointer
+var flags = map[string]*FlagInfo{
+	"sky":    {message: "sky is blue", colour: colourBlue},
+	"blood":  {message: "blood is red", colour: colourRed},
+	"grass":  {message: "grass is green", colour: colourGreen},
+	"carrot": {message: "carrot is orange", colour: colourOrange},
+	"crow":   {message: "crow is black", colour: colourBlack},
 }
 
 // Set up flags based on the flags map
 func initFlags() {
-	for key := range flags {
-		flag := flag.Bool(key, false, "display the message")
-		flags[key] = FlagInfo{flag, flags[key].message, flags[key].colour}
+	for key, value := range flags {
+		value.flag = flag.Bool(key, false, "display the message")
 	}
 }
 
 // colorize applies the given ANSI color to the message and prints it to stdout.
-func colorize(colour Colour, message string) {
+func colourize(colour Colour, message string) {
 	fmt.Println(colour, message, colourReset)
 }
 
@@ -53,7 +52,7 @@ func displayMessages() bool {
 	displayed := false
 	for _, v := range flags {
 		if *v.flag {
-			colorize(v.colour, v.message)
+			colourize(v.colour, v.message)
 			displayed = true
 		}
 	}
