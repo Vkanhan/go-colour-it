@@ -60,10 +60,22 @@ func displayMessages() bool {
 	return displayed
 }
 
+// generateOptionsList generates a comma-separated list of available options
+func generateOptionsList() string {
+	options := ""
+	for key := range flags {
+		if options != "" {
+			options += ", "
+		}
+		options += key
+	}
+	return options
+}
+
 
 func main() {
 	// Print possible options
-	fmt.Println("Possible options for you to flag: [sky, blood, grass, carrot, crow]")
+	fmt.Printf("Possible options for you to flag: [%s]\n", generateOptionsList())
 
 	// Initialize and parse flags
 	initFlags()
