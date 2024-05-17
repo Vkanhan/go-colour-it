@@ -18,34 +18,59 @@ const (
 // Colour type represents ANSI color codes for text styling.
 type Colour string
 
+// FlagInfo struct holds the information about each flag.
+type FlagInfo struct {
+	flag    *bool
+	message string
+	colour  Colour
+}
+
+// Implement flags as map and include the details
+var flags = map[string]FlagInfo{
+	"sky":    {nil, "sky is blue", colourBlue},
+	"blood":  {nil, "blood is red", colourRed},
+	"grass":  {nil, "grass is green", colourGreen},
+	"carrot": {nil, "carrot is orange", colourOrange},
+	"crow":   {nil, "crow is black", colourBlack},
+}
+
+// Set up flags based on the flags map
+func initFlags() {
+	for key := range flags {
+		flag := flag.Bool(key, false, "display the message")
+		flags[key] = FlagInfo{flag, flags[key].message, flags[key].colour}
+	}
+}
+
 // colorize applies the given ANSI color to the message and prints it to stdout.
 func colorize(colour Colour, message string) {
 	fmt.Println(colour, message, colourReset)
 }
 
-func main() {
 
-	// Define command-line flags
-	sky := flag.Bool("sky", false, "display the message")
-	blood := flag.Bool("blood", false, "display the message")
-	grass := flag.Bool("grass", false, "display the message")
-	carrot := flag.Bool("carrot", false, "display the message")
-	crow := flag.Bool("crow", false, "display the message")
+// displayMessages checks the flags and prints the message.
+func displayMessages() bool {
+	displayed := false
+	for _, v := range flags {
+		if *v.flag {
+			colorize(v.colour, v.message)
+			displayed = true
+		}
+	}
+	return displayed
+}
+
+
+func main() {
+	// Print possible options
+	fmt.Println("Possible options for you to flag: [sky, blood, grass, carrot, crow]")
+
+	// Initialize and parse flags
+	initFlags()
 	flag.Parse()
 
-	// Handle command-line flags
-	switch {
-	case *sky:
-		colorize(colourBlue, "sky is blue")
-	case *blood:
-		colorize(colourRed, "blood is red")
-	case *grass:
-		colorize(colourGreen, "grass is green")
-	case *carrot:
-		colorize(colourOrange, "carrot is orange")
-	case *crow:
-		colorize(colourBlack, "crow is black")
-	default:
-		fmt.Println("invalid command!")
+	// Display messages based on the flags set
+	if !displayMessages() {
+		fmt.Println("invalid command! Use -h for help.")
 	}
 }
