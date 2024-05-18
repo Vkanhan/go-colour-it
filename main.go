@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"strings"
 )
 
 // ANSI color code constants for text styling.
@@ -46,7 +47,6 @@ func colourize(colour Colour, message string) {
 	fmt.Println(colour, message, colourReset)
 }
 
-
 // displayMessages checks the flags and prints the message.
 func displayMessages() bool {
 	displayed := false
@@ -61,16 +61,12 @@ func displayMessages() bool {
 
 // generateOptionsList generates a comma-separated list of available options
 func generateOptionsList() string {
-	options := ""
+	var options []string
 	for key := range flags {
-		if options != "" {
-			options += ", "
-		}
-		options += key
+		options = append(options, key)
 	}
-	return options
+	return strings.Join(options, ", ")
 }
-
 
 func main() {
 	// Print possible options
