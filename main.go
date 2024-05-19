@@ -9,11 +9,11 @@ import (
 // ANSI color code constants for text styling.
 const (
 	colourBlack  Colour = "\u001b[30m"
-	colourRed           = "\u001b[31m"
-	colourGreen         = "\u001b[32m"
-	colourOrange        = " \033[38;5;208m"
-	colourBlue          = "\u001b[34m"
-	colourReset         = "\u001b[0m"
+	colourRed    Colour = "\u001b[31m"
+	colourGreen  Colour = "\u001b[32m"
+	colourOrange Colour = " \033[38;5;208m"
+	colourBlue   Colour = "\u001b[34m"
+	colourReset  Colour = "\u001b[0m"
 )
 
 // Colour type represents ANSI color codes for text styling.
