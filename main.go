@@ -51,7 +51,7 @@ func colourize(colour Colour, message string) {
 func displayMessages() bool {
 	displayed := false
 	for _, v := range flags {
-		if *v.flag {
+		if v.flag != nil && *v.flag {
 			colourize(v.colour, v.message)
 			displayed = true
 		}
